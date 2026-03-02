@@ -7,29 +7,37 @@ export default function LandingPage() {
     <>
       <Header />
       <main className="flex-1">
-        {/* Hero */}
-        <section className="max-w-4xl mx-auto px-4 pt-20 pb-16 text-center">
-          <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-medium">
-            Free • No Login • Instant Results
+        {/* Hero with background image */}
+        <section
+          className="relative w-full min-h-[80vh] sm:min-h-[90vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/hero.jpg')" }}
+        >
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-surface" />
+
+          {/* Content */}
+          <div className="relative z-10 max-w-3xl mx-auto px-4 py-20 text-center">
+            <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-300 text-sm font-medium backdrop-blur-sm">
+              Free • No Login • Instant Results
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight mb-6 text-white drop-shadow-lg">
+              Is Your Hook Strong Enough{" "}
+              <span className="gradient-text">to Go Viral?</span>
+            </h1>
+            <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Get an instant score and fix your title in seconds.
+            </p>
+            <Link
+              href="/check"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold text-lg rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-500/25"
+            >
+              🎯 Score My Hook
+            </Link>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black leading-tight mb-6">
-            Is your TikTok hook{" "}
-            <span className="gradient-text">strong enough?</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Paste your hook, get a score from 0–100, and receive 3 instant tips
-            to maximize watch time and go viral.
-          </p>
-          <Link
-            href="/check"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold text-lg rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-500/25"
-          >
-            🎯 Check Your Hook
-          </Link>
         </section>
 
         {/* How it works */}
-        <section className="max-w-4xl mx-auto px-4 pb-20">
+        <section className="max-w-4xl mx-auto px-4 py-20">
           <h2 className="text-center text-2xl font-bold mb-10 text-white/90">
             How it works
           </h2>
