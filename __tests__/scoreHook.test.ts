@@ -100,4 +100,20 @@ describe("scoreHook", () => {
     expect(r.score).toBeGreaterThanOrEqual(0);
     expect(r.score).toBeLessThanOrEqual(100);
   });
+
+  // 13. Always returns exactly 3 rewrites
+  it("always returns exactly 3 rewrites", () => {
+    expect(scoreHook("hello").rewrites).toHaveLength(3);
+    expect(scoreHook("Why are YOU making these 3 secret mistakes? STOP now insane 50%").rewrites).toHaveLength(3);
+    expect(scoreHook("").rewrites).toHaveLength(3);
+  });
+
+  // 14. Rewrites are non-empty strings
+  it("returns non-empty rewrite strings", () => {
+    const r = scoreHook("some random title for testing");
+    r.rewrites.forEach((rw) => {
+      expect(typeof rw).toBe("string");
+      expect(rw.length).toBeGreaterThan(0);
+    });
+  });
 });

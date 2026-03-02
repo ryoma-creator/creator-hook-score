@@ -21,6 +21,7 @@ export interface HookResult {
   verdict: string;
   signals: Signals;
   tips: string[];      // exactly 3
+  rewrites: string[];  // exactly 3 copy-paste suggestions
 }
 
 // ── Power words ──
@@ -96,7 +97,10 @@ export function scoreHook(title: string): HookResult {
   // ── Tips (exactly 3) ──
   const tips = generateTips(signals, wordCount);
 
-  return { score, grade, verdict, signals, tips };
+  // ── Rewrites (exactly 3) ──
+  const rewrites = generateRewrites(trimmed, signals);
+
+  return { score, grade, verdict, signals, tips, rewrites };
 }
 
 function gradeFromScore(score: number): Grade {
@@ -161,6 +165,56 @@ function generateTips(signals: Signals, wordCount: number): string[] {
     pool.push("Keep testing new hooks — iteration is key to virality.");
   }
   return pool.slice(0, 3);
+}
+
+/**
+ * Generate exactly 3 rewrite suggestions based on missing signals.
+ * 1) Curiosity template — injects a power word if missing
+ * 2) Specificity template — adds a number/time if missing
+ * 3) Direct-to-viewer template — uses "you" + ALL CAPS if missing
+ */
+function generateRewrites(original: string, signals: Signals): string[] {
+  const words = original.split(/\s+/).filter(Boolean);
+  const core = words.slice(0, 8).join(" "); // keep it short for templates
+
+  // Strip trailing punctuation for clean insertion
+  const stripped = original.replace(/[?.!…]+$/, "").trim();
+
+  // ── 1) Curiosity rewrite ──
+  let curiosity: string;
+  if (!signals.hasPowerWord) {
+    curiosity = `The secret truth about ${stripped.toLowerCase()}`;
+  } else if (!signals.hasQuestion) {
+    curiosity = `Why does nobody talk about this? ${core}`;
+  } else {
+    curiosity = `What nobody tells you about ${stripped.toLowerCase()}`;
+  }
+
+  // ── 2) Specificity rewrite ──
+  let specificity: string;
+  if (!signals.hasDigit && !signals.hasSpecificity) {
+    specificity = `${stripped} — 3 things you need to know in 30 days`;
+  } else if (!signals.hasDigit) {
+    specificity = `7 reasons why ${stripped.toLowerCase()}`;
+  } else if (!signals.hasSpecificity) {
+    specificity = `${stripped} (in just 5 minutes)`;
+  } else {
+    specificity = `${stripped} — the 90% of people don't know this`;
+  }
+
+  // ── 3) Direct-to-viewer rewrite ──
+  let direct: string;
+  if (!signals.hasYou && !signals.hasAllCaps) {
+    direct = `STOP — you need to hear this: ${stripped.toLowerCase()}`;
+  } else if (!signals.hasYou) {
+    direct = `You won't believe this: ${stripped}`;
+  } else if (!signals.hasAllCaps) {
+    direct = `WATCH this before you ${stripped.toLowerCase()}`;
+  } else {
+    direct = `You NEED to see this — ${stripped.toLowerCase()}`;
+  }
+
+  return [curiosity, specificity, direct];
 }
 
 /** Map grade to Tailwind badge color classes */

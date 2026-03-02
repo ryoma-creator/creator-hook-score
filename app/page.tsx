@@ -1,37 +1,45 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import HeroScoreCard from "@/components/HeroScoreCard";
 
 export default function LandingPage() {
   return (
     <>
       <Header />
       <main className="flex-1">
-        {/* ── 1) Hero ── */}
-        <section
-          className="relative w-full min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero.jpg')" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-surface" />
+        {/* ── 1) Hero — two-column, gradient bg ── */}
+        <section className="relative w-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden">
+          {/* Subtle glow accents */}
+          <div className="absolute top-1/4 -left-32 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
 
-          <div className="relative z-10 max-w-3xl mx-auto px-4 py-20 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight mb-6 text-white drop-shadow-lg">
-              Your Hook Sucks.{" "}
-              <span className="gradient-text">Let&apos;s Fix It.</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Stop guessing. Get an instant Creator Hook Score™ and improve your
-              title in seconds.
-            </p>
-            <Link
-              href="/check"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold text-lg rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-500/25"
-            >
-              Score My Hook →
-            </Link>
-            <p className="mt-4 text-sm text-white/40">
-              Free. No signup. Takes 10 seconds.
-            </p>
+          <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 sm:py-28 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+            {/* Left — copy */}
+            <div className="flex-1 text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 text-white">
+                Your Hook Sucks.{" "}
+                <span className="gradient-text">Let&apos;s Fix It.</span>
+              </h1>
+              <p className="text-lg sm:text-xl text-white/55 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+                Stop guessing. Get an instant Creator Hook Score™ and improve
+                your title in seconds.
+              </p>
+              <Link
+                href="/check"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-brand-500 hover:bg-brand-600 text-white font-bold text-lg rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-500/25"
+              >
+                Score My Hook →
+              </Link>
+              <p className="mt-4 text-sm text-white/35">
+                Free. No signup. Takes 10 seconds.
+              </p>
+            </div>
+
+            {/* Right — mock score card */}
+            <div className="flex-shrink-0">
+              <HeroScoreCard />
+            </div>
           </div>
         </section>
 
